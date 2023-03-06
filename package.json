@@ -1,6 +1,6 @@
 {
   "name": "quickchart-js-standalone",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "main": "index.js",
   "license": "AGPL-3.0",
   "homepage": "https://github.com/bilaltahseen/quickchart-js-standalone",
@@ -11,6 +11,7 @@
   "scripts": {
     "start": "node --max-http-header-size=65536 index.js"
   },
+  "keywords": ["quickcharts","chartjs","standalone","javascript","easy","integeration","dynamic","charts","data","shapes","powerbi"],
   "overrides": {
     "canvas": "2.9.3"
   },
