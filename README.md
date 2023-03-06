@@ -16,7 +16,7 @@ As you can see, the Javascript or JSON object contained in the URL defines the c
 ## Configuring your chart
 
 ```js
-const QuickChartJs = require("./index")
+const QuickChartJs = require("quickchart-js-standalone")
 const path = require('path')
 const QuickChartJsInstance = new QuickChartJs()
 
