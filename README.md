@@ -1,6 +1,14 @@
 QuickChart-Js-Standalone
 ---
 
+# Installation
+
+If you are using npm:
+
+```
+npm install quickchart-js-standalone
+```
+
 
 [QuickChart](https://quickchart.io/) is a service that generates images of charts from a URL.  Because these charts are simple images, they are very easy to embed in non-dynamic environments such as email, SMS, chat rooms, and so on.
 
