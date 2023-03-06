@@ -1,4 +1,4 @@
-const QuickChartJs = require("./index")
+const QuickChartJs = require("quickchart-js-standalone")
 const path = require('path')
 const QuickChartJsInstance = new QuickChartJs()
 

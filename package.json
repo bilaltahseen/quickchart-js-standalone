@@ -1,12 +1,12 @@
 {
   "name": "quickchart-js-standalone",
-  "version": "1.8.0",
+  "version": "1.1.0",
   "main": "index.js",
   "license": "AGPL-3.0",
-  "homepage": "https://quickchart.io/",
+  "homepage": "https://github.com/bilaltahseen/quickchart-js-standalone",
   "repository": {
     "type": "git",
-    "url": "https://github.com/typpo/quickchart.git"
+    "url": "https://github.com/bilaltahseen/quickchart-js-standalone.git"
   },
   "scripts": {
     "start": "node --max-http-header-size=65536 index.js"
