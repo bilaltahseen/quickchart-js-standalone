@@ -1,8 +1,8 @@
-const QuickChartJs = require("quickchart-js-standalone")
+const QuickChartJs = require("./index")
 const path = require('path')
 const QuickChartJsInstance = new QuickChartJs()
 
-
+QuickChartJsInstance.setIsRemote()
 QuickChartJsInstance.setConfig({
   type: 'bar',
   data: {

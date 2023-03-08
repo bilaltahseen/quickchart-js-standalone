@@ -1,6 +1,9 @@
+const fetch = require('cross-fetch')
 const fs = require('fs');
 const { stringify } = require('javascript-stringify');
-const { renderChartJs }  = require('./lib/charts');
+const { renderChartJs } = require('./lib/charts');
+
+const USER_AGENT = `quickchart-js/3.1.0`;
 
 class QuickChartJs {
     constructor() {
@@ -12,6 +15,29 @@ class QuickChartJs {
         this.backgroundColor = '#ffffff';
         this.format = 'png';
         this.version = '2';
+        this.isRemote = false;
+        this.host = 'quickchart.io';
+        this.scheme = 'https';
+    }
+
+    setIsRemote() {
+        this.isRemote = true
+    }
+
+    postJson(url, payload) {
+        return fetch(url, {
+          method: 'POST',
+          headers: {
+            'User-Agent': USER_AGENT,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+      }
+      
+
+    getBaseUrl() {
+        return `${this.scheme}://${this.host}`;
     }
 
     setConfig(chartConfig) {
@@ -89,7 +115,7 @@ class QuickChartJs {
         const height = parseInt(opts.height, 10) || 300;
 
         let untrustedInput = opts.chart;
-          
+
         return renderChartJs(
             width,
             height,
@@ -105,10 +131,25 @@ class QuickChartJs {
     renderChartToPng(opts) {
         opts.failFn = this.failPng;
         opts.onRenderHandler = buf => {
-           return buf
+            return buf
         };
         return this.doChartjsRender(opts);
     }
+
+    async toBinaryRemote() {
+        if (!this.isValid()) {
+          throw new Error('You must call setConfig before getUrl');
+        }
+    
+        const resp = await this.postJson(`${this.getBaseUrl()}/chart`, this.getPostData());
+        if (!resp.ok) {
+          const quickchartError = resp.headers.get('x-quickchart-error');
+          const details = quickchartError ? `\n${quickchartError}` : '';
+          throw new Error(`Chart creation failed with status code ${resp.status}${details}`);
+        }
+        const data = await resp.arrayBuffer();
+        return Buffer.from(data);
+      }
 
     async toBinary() {
         if (!this.isValid()) {
@@ -121,13 +162,27 @@ class QuickChartJs {
     }
 
     async toDataUrl() {
-        const buf = await this.toBinary();
+        let buf = ''
+        if(this.isRemote){
+            buf = await this.toBinaryRemote();
+        }
+        else{
+            buf = await this.toBinary();
+        }
         const b64buf = buf.toString('base64');
         return `data:image/png;base64,${b64buf}`;
     }
 
+
+
     async toFile(pathOrDescriptor) {
-        const buf = await this.toBinary();
+        let buf = ''
+        if(this.isRemote){
+            buf = await this.toBinaryRemote();
+        }
+        else{
+            buf = await this.toBinary();
+        }
         fs.writeFileSync(pathOrDescriptor, buf);
     }
 }

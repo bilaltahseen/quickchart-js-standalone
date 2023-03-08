@@ -39,6 +39,8 @@ const FILE_NAME = "./test.png"
 QuickChartJsInstance.toFile(path.join(__dirname,FILE_NAME))
 ```
 
+![Bar Chart Output](./test.png "Output")
+
 
 
 
